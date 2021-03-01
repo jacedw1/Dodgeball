@@ -1,0 +1,5 @@
+name: Dodgeball
+version: @version@
+main: me.ishy.dodgeball.Dodgeball
+api-version: 1.16
+authors: [ ishy ]
