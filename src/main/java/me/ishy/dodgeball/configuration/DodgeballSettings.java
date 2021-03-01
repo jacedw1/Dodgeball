@@ -16,9 +16,11 @@ public class DodgeballSettings {
     private List<LocationSerizalizer> Team_One_Spawnpoints;
     private transient List<Location> t1s;
     private List<LocationSerizalizer> Team_Two_Spawnpoints;
-    private transient List<Location> t2s;
+    private transient List<Location> t2s;;
+    private List<String> rewards;
 
-    public DodgeballSettings(String Team_One_Name, String Team_Two_Name, int Game_Start_Time, int Ball_Cooldown, LocationSerizalizer Spectate_Spawnpoint, List<LocationSerizalizer> Team_One_Spawnpoints, List<LocationSerizalizer> Team_Two_Spawnpoints) {
+
+    public DodgeballSettings(String Team_One_Name, String Team_Two_Name, int Game_Start_Time, int Ball_Cooldown, LocationSerizalizer Spectate_Spawnpoint, List<LocationSerizalizer> Team_One_Spawnpoints, List<LocationSerizalizer> Team_Two_Spawnpoints, List<String> rewards) {
         this.Team_One_Name = Team_One_Name;
         this.Team_Two_Name = Team_Two_Name;
         this.Game_Start_Time = Game_Start_Time;
@@ -26,6 +28,7 @@ public class DodgeballSettings {
         this.Spectate_Spawnpoint = Spectate_Spawnpoint;
         this.Team_One_Spawnpoints = Team_One_Spawnpoints;
         this.Team_Two_Spawnpoints = Team_Two_Spawnpoints;
+        this.rewards = rewards;
     }
 
     public void postRead(){
@@ -79,6 +82,10 @@ public class DodgeballSettings {
 
     public List<Location> getT2s() {
         return t2s;
+    }
+
+    public List<String> getRewards() {
+        return rewards;
     }
 
     public void setTeam_One_Name(String team_One_Name) {

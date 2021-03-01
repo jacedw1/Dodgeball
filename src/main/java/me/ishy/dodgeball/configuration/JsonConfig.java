@@ -38,8 +38,10 @@ public class JsonConfig {
                 Team_One_Spawnpoints.add(defaultLoc);
                 List<LocationSerizalizer> Team_Two_Spawnpoints = new ArrayList<>();
                 Team_Two_Spawnpoints.add(defaultLoc);
+                List<String> rewards = new ArrayList<>();
+                rewards.add("give %player% diamond 1");
 
-                DodgeballSettings defaults = new DodgeballSettings(Team_One_Name, Team_Two_Name, Game_Start_Time, Ball_Cooldown, Spectate_Spawnpoint, Team_One_Spawnpoints, Team_Two_Spawnpoints);
+                DodgeballSettings defaults = new DodgeballSettings(Team_One_Name, Team_Two_Name, Game_Start_Time, Ball_Cooldown, Spectate_Spawnpoint, Team_One_Spawnpoints, Team_Two_Spawnpoints, rewards);
 
                 //convert to json
                 String json_out = gson.toJson(defaults);

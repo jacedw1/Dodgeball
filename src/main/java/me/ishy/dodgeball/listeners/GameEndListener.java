@@ -25,6 +25,9 @@ public class GameEndListener implements Listener {
         for(Map.Entry<Player, String> players2 : GameManager.players.entrySet()){
             if(players2.getValue().equals(e.getWinningTeam())){
                 //add rewards?
+                for(String cmd : GameManager.rewards){
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd.replaceAll("%player%", players2.getKey().getName()));
+                }
             }
 
             players2.getKey().teleport(GameManager.prevLoc.get(players2.getKey()));

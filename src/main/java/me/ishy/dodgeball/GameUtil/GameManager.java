@@ -25,6 +25,7 @@ public class GameManager {
     public static String TEAM2;
     public static int GAME_START_TIME;
     private static int BALL_COOLDOWN;
+    public static List<String> rewards;
 
     //important storage
     public static Map<Player,String> players = new HashMap<>();
@@ -114,5 +115,7 @@ public class GameManager {
                 team2SpawnPoints.add(loc);
             }
         }
+
+        rewards = settings.getRewards();
     }
 }
