@@ -3,14 +3,18 @@ package me.ishy.dodgeball.GameUtil.Timers;
 import me.ishy.dodgeball.Dodgeball;
 import me.ishy.dodgeball.GameUtil.GameManager;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 
 public class ItemTimer extends BukkitRunnable {
 
-    public ItemTimer(){
+    private Dodgeball plugin;
 
+
+    public ItemTimer(){
+        this.plugin = Dodgeball.getInstance();
     }
 
     @Override
@@ -20,7 +24,7 @@ public class ItemTimer extends BukkitRunnable {
         }
         for(Map.Entry<Player, String> players2 : GameManager.players.entrySet()){
             if(!GameManager.out.containsKey(players2.getKey())){
-                players2.getKey().getInventory().addItem(Dodgeball.DODGEBALL);
+                players2.getKey().getInventory().addItem(plugin.getDodgeball());
             }
         }
     }

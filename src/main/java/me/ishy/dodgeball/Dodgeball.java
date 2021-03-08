@@ -22,8 +22,9 @@ public final class Dodgeball extends JavaPlugin {
 
     private PaperCommandManager manager;
     private static Dodgeball instance;
-    public static DodgeballSettings conf;
-    public static ItemStack DODGEBALL = new ItemStack(Material.SNOWBALL);
+    private DodgeballSettings conf;
+    private ItemStack dodgeball;
+
 
     @Override
     public void onEnable() {
@@ -35,9 +36,11 @@ public final class Dodgeball extends JavaPlugin {
         GameManager.loadSettings(conf);
         Bukkit.getServer().getPluginManager().registerEvents(new GameEndListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new DodgeballHitListener(), this);
-        ItemMeta dodgeballMeta = DODGEBALL.getItemMeta();
+
+        dodgeball = new ItemStack(Material.SNOWBALL);
+        ItemMeta dodgeballMeta = dodgeball.getItemMeta();
         dodgeballMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&cDodgeball"));
-        DODGEBALL.setItemMeta(dodgeballMeta);
+        dodgeball.setItemMeta(dodgeballMeta);
 
     }
 
@@ -52,6 +55,17 @@ public final class Dodgeball extends JavaPlugin {
 
     public static Dodgeball getInstance(){
         return instance;
+    }
+
+    public DodgeballSettings getConf() {
+        return this.conf;
+    }
+    public void setConf(DodgeballSettings conf) {
+        this.conf = conf;
+    }
+
+    public ItemStack getDodgeball() {
+        return this.dodgeball;
     }
 
 }

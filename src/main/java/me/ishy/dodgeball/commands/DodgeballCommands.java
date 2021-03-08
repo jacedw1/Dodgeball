@@ -8,6 +8,7 @@ import co.aikar.commands.annotation.Subcommand;
 import me.ishy.dodgeball.Dodgeball;
 import me.ishy.dodgeball.GameUtil.GameManager;
 import me.ishy.dodgeball.GameUtil.InventoryManager;
+import me.ishy.dodgeball.configuration.DodgeballSettings;
 import me.ishy.dodgeball.configuration.JsonConfig;
 import me.ishy.dodgeball.events.GameEndEvent;
 import net.md_5.bungee.api.ChatColor;
@@ -54,8 +55,10 @@ public class DodgeballCommands extends BaseCommand {
     @Subcommand("setspectate")
     public static void onSetSpectate(Player player){
         GameManager.spectate = player.getLocation();
-        Dodgeball.conf.setSpectateSerialized(GameManager.spectate);
-        JsonConfig.save(Dodgeball.conf);
+        DodgeballSettings conf = Dodgeball.getInstance().getConf();
+        conf.setSpectateSerialized(GameManager.spectate);
+        Dodgeball.getInstance().setConf(conf);
+        JsonConfig.save(conf);
         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&8[&c&lDodgeball&8] &eYou have successfully set the spectate point to " + player.getLocation().getX() + ", " + player.getLocation().getY() + ", " + player.getLocation().getZ()));
     }
 
@@ -63,16 +66,19 @@ public class DodgeballCommands extends BaseCommand {
     @CommandCompletion("team1|team2")
     @Subcommand("setspawn")
     public static void onSetSpawn(Player player, String team){
+        DodgeballSettings conf = Dodgeball.getInstance().getConf();
         if(team.equalsIgnoreCase("team1")) {
             GameManager.team1SpawnPoints.add(player.getLocation());
-            Dodgeball.conf.setT1s(GameManager.team1SpawnPoints);
-            JsonConfig.save(Dodgeball.conf);
+            conf.setT1s(GameManager.team1SpawnPoints);
+            Dodgeball.getInstance().setConf(conf);
+            JsonConfig.save(conf);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lDodgeball&8] &eYou have successfully set a new  spawnpoint for " + GameManager.TEAM1 + " team to " + player.getLocation().getX() + ", " + player.getLocation().getY() + ", " + player.getLocation().getZ()));
         }
         else if(team.equalsIgnoreCase("team2")){
             GameManager.team2SpawnPoints.add(player.getLocation());
-            Dodgeball.conf.setT2s(GameManager.team2SpawnPoints);
-            JsonConfig.save(Dodgeball.conf);
+            conf.setT2s(GameManager.team2SpawnPoints);
+            Dodgeball.getInstance().setConf(conf);
+            JsonConfig.save(conf);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lDodgeball&8] &eYou have successfully set a new  spawnpoint for " + GameManager.TEAM2 + " team to " + player.getLocation().getX() + ", " + player.getLocation().getY() + ", " + player.getLocation().getZ()));
         }
         else{
@@ -83,8 +89,10 @@ public class DodgeballCommands extends BaseCommand {
     @CommandPermission("dodgeball.admin")
     @Subcommand("reload")
     public static void onReload(Player player){
-        Dodgeball.conf = JsonConfig.setup();
-        GameManager.loadSettings(Dodgeball.conf);
+        DodgeballSettings conf = JsonConfig.setup();
+        GameManager.loadSettings(conf);
+        Dodgeball.getInstance().setConf(conf);
+        JsonConfig.save(conf);
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lDodgeball&8] &eYou successfully reloaded the config!"));
     }
 
@@ -129,10 +137,10 @@ public class DodgeballCommands extends BaseCommand {
         }
 
         InventoryManager.returnInv(player);
-        if(GameManager.players.get(player) == GameManager.TEAM1){
+        if(GameManager.players.get(player).equals(GameManager.TEAM1)){
             GameManager.team1--;
         }
-        else if(GameManager.players.get(player) == GameManager.TEAM2){
+        else if(GameManager.players.get(player).equals(GameManager.TEAM2)){
             GameManager.team2--;
         }
         player.teleport(GameManager.prevLoc.get(player));
